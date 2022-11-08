@@ -14,6 +14,7 @@ import Home from '../screens/HomeScreen';
 import {FavouriteInitial} from '../screens/FavouriteScreenInitial';
 import {RecentInitial} from '../screens/RecentSearchInitial';
 import { Favourite } from '../screens/FavouriteScreen';
+import { Recent } from '../screens/RecentScreen';
 
 
 const Drawer = createDrawerNavigator();
@@ -35,7 +36,7 @@ export const DrawerNavigate = () => {
         <Drawer.Screen
           options={{headerShown: false}}
           name="Recent Search"
-          component={RecentInitial}
+          component={Recent}
         />
       </Drawer.Navigator>
     </NavigationContainer>
