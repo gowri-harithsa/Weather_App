@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistReducer} from 'redux-persist';
 import {combineReducers} from '@reduxjs/toolkit';
 import FavouritesListReducer from '../redux/FavouritesListSlice';
+import WeatherDataReducer from '../redux/WeatherDataSlice';
 
 const persistConfig = {
   key: 'root',
@@ -12,6 +13,7 @@ const persistConfig = {
 
 const reducer  = combineReducers({
   favouritesListDetail: FavouritesListReducer,
+  WeatherDataList: WeatherDataReducer,
 });
 
 const persistedRed = persistReducer(persistConfig, reducer);

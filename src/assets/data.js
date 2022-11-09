@@ -9,46 +9,57 @@ const clearNight = require('../assets/images/icon_clear_night_small.png');
 
 export const DataList = [
     {
-        city: 'Udupi, Karnataka',
+        city: 'Udupi',
+        id: 'Udupi',
+        region: 'Karnataka',
         weatherImage: mostlySunny,
         temperature: '31°C',
         detail: 'Mostly Sunny',
-        id: 1,
     },
     {
-        city: 'Bengaluru, Karnataka',
+        city: 'Bengaluru',
+        id: 'Bengaluru',
+        region: 'Karnataka',
         weatherImage: rain,
         temperature: '29°C',
         detail: 'Rain',
-        id: 2,
+
     },
     {
-        city: 'Mumbai, Maharashtra',
+        city: 'Mumbai',
+        id: 'Mumbai',
+        region: 'Maharashtra',
         weatherImage: mostlyCloudy,
         temperature: '32°C',
         detail: 'Mostly Cloudy',
-        id: 3,
+
     },
     {
-        city: 'Kolkatta, West Bengal',
+        city: 'Kolkatta',
+        id: 'Kolkatta',
+        region: 'West Bengal',
         weatherImage: partlyCloudy,
         temperature: '30°C',
         detail: 'Partly Cloudy',
-        id: 4,
+
     },
     {
-        city: 'Panaji, Goa',
+        city: 'Panaji',
+        id: 'Panaji',
+        region: 'Goa',
         weatherImage: thunderstorm,
         temperature: '31°C',
         detail: 'Thunderstorm',
-        id: 5,
+
     },
     {
-        city: 'Newyork, United States',
+        city: 'Newyork',
+        id: 'Newyork',
+        region: 'United States',
         weatherImage: clearNight,
         temperature: '24°C',
         detail: 'Clear Night',
-        id: 6,
+
     },
 ];
 

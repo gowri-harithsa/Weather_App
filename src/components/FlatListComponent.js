@@ -9,19 +9,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
+import { deleteCity } from '../redux/FavouritesListSlice';
+import {useDispatch} from 'react-redux';
+
 
 export const FavouriteLists = () => {
   const list = useSelector(state => state.favouritesListDetail.favList);
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
       <FlatList
         data={list}
         renderItem={({item}) => (
-          <>
+          <Pressable onLongPress={() => dispatch(deleteCity({id: item.city}))}>
+            <>
             <View style={styles.flatView}>
               <View style={styles.subView}>
-                <Text style={styles.cityText}>{item.city}</Text>
+                <Text style={styles.cityText}>{item.city}, {item.region}</Text>
                 <View style={styles.climateView}>
                   <Image
                     source={item.weatherImage}
@@ -39,8 +44,9 @@ export const FavouriteLists = () => {
               />
             </View>
           </>
+          </Pressable>
         )}
-        // keyExtractor={item => item.id}
+        keyExtractor={item => item.city}
       />
     </View>
   );

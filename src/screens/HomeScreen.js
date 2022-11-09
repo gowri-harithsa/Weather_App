@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,15 +8,36 @@ import {
   SafeAreaView,
   ScrollView,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
+import moment from 'moment';
 import {ScrollBar} from '../components/HorizontalScrollbarView';
 import {TemperatureUnitSwitch} from '../components/Buttons';
+import {TemperatureUnitSwitch2} from '../components/Buttons';
 import {SearchComponent} from '../components/Search';
-import { DisplayData } from '../services/Auth';
+import {useDispatch, useSelector} from 'react-redux';
+import {getData} from '../redux/WeatherDataSlice';
+import { addCity } from '../redux/FavouritesListSlice';
 
 const Home = ({navigation}) => {
-  const [search, setSearch] = React.useState(false);
+  const [date, setDate] = useState('');
+  const currentDateTime = () => {
+    const dateTimeMoment = moment()
+      .utcOffset('+05:30')
+      .format('ddd, DD MMM YY    hh:mm a')
+      .toUpperCase();
+    setDate(dateTimeMoment);
+  };
+  useEffect(() => {
+    currentDateTime();
+  }, []);
 
+  const dispatch = useDispatch();
+
+  const data = useSelector(state => state.WeatherDataList.list);
+
+  const [search, setSearch] = useState(false);
+  const [degree, setDegree] = useState(data.current.temp_c);
   const handleHamburgerMenu = () => {
     navigation.openDrawer();
   };
@@ -54,10 +75,30 @@ const Home = ({navigation}) => {
             </View>
             <ScrollView>
               <View style={styles.secondView}>
-                <Text style={styles.calendar}>WED, 28 NOV 2018     11:35 AM </Text>
-                <Text style={styles.place}>Udupi, Karnataka</Text>
+                <Text style={styles.calendar}>{date} </Text>
+                <View style={styles.cityNameView}>
+                  <Text style={styles.place}>
+                    {data.location.name},
+                    </Text>
+                  <Text style={styles.place}>
+                    {data.location.region}
+                    </Text>
+                </View>
                 <View style={styles.favouriteView}>
-                  <Image source={require('../assets/images/favourite.png')} />
+                  <TouchableOpacity
+                    onPress={() => {
+                      dispatch(getData());
+                      const obj = {
+                        id:data.location.name,
+                        city: data.location.name,
+                        region: data.location.region,
+                        temperature: data.current.temp_c,
+                        detail: data.current.condition.text,
+                      }
+                      dispatch(addCity(obj))
+                    }}>
+                    <Image source={require('../assets/images/favourite.png')} />
+                  </TouchableOpacity>
                   <Text style={styles.favouriteText}>Add to favourite</Text>
                 </View>
               </View>
@@ -66,10 +107,20 @@ const Home = ({navigation}) => {
                   source={require('../assets/images/mostlySunny.png')}
                   style={styles.sunny}
                 />
+
                 <View style={styles.temperature}>
-                  <Text style={styles.text31}>31</Text>
-                  <TemperatureUnitSwitch />
+                  <Text style={styles.text31}>{degree}</Text>
+                  {degree == data.current.temp_c ? (
+                    <TemperatureUnitSwitch
+                      onPressF={() => setDegree(data.current.temp_f)}
+                    />
+                  ) : (
+                    <TemperatureUnitSwitch2
+                      onPressC={() => setDegree(data.current.temp_c)}
+                    />
+                  )}
                 </View>
+
                 <Text style={styles.textSunny}>Mostly Sunny</Text>
               </View>
             </ScrollView>
@@ -134,6 +185,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     marginVertical: 10,
+  },
+  cityNameView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   favouriteView: {
     flexDirection: 'row',
