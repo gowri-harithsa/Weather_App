@@ -1,12 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
-import  DataList  from '../assets/data';
+import {DataList}   from '../assets/data';
+import { RecentDataList } from '../assets/data';
 
-const initialState = DataList;
+const FavouriteinitialState = DataList;
+const RecentInitialState = RecentDataList;
 
-export const favouriteSlice = createSlice({
+export const WeatherSlice = createSlice({
   name: 'favouriteList',
   initialState: {
-    favList: initialState,
+    favList: FavouriteinitialState,
+    RecentList: RecentInitialState,
   },
   reducers: {
     // getUserData: (state, action) => {
@@ -18,5 +21,5 @@ export const favouriteSlice = createSlice({
   },
 });
 
-export const {getUserData} = favouriteSlice.actions;
-export default favouriteSlice.reducer;
+export const {getUserData} = WeatherSlice.actions;
+export default WeatherSlice.reducer;

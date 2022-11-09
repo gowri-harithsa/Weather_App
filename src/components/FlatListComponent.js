@@ -40,14 +40,50 @@ export const FavouriteLists = () => {
             </View>
           </>
         )}
+        // keyExtractor={item => item.id}
       />
     </View>
   );
 };
 
+export const RecentLists = () => {
+  const list2 = useSelector(state => state.favouritesListDetail.RecentList);
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={list2}
+        renderItem={({item}) => (
+          <>
+            <View style={styles.flatView}>
+              <View style={styles.subView}>
+                <Text style={styles.cityText}>{item.city}</Text>
+                <View style={styles.climateView}>
+                  <Image
+                    source={item.weatherImage}
+                    style={styles.weatherImage}
+                  />
+                  <Text style={styles.textTemperature}>{item.temperature}</Text>
+                  <Text style={styles.textDetail}>{item.detail}</Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <Image
+                source={item.favourite}
+                style={styles.imageFav}
+              />
+            </View>
+          </>
+        )}
+      />
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   flatView: {
-    height: 80,
+    // height: 80,
     backgroundColor: 'rgba(255,255,255,0.1)',
     flexDirection: 'row',
     marginHorizontal: 16,
@@ -85,7 +121,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 9,
   },
   imageFav: {
-    marginHorizontal: 330,
+    marginHorizontal: '85%',
     marginTop: -50,
     height: 17,
     width: 18,

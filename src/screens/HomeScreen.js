@@ -11,59 +11,74 @@ import {
 } from 'react-native';
 import {ScrollBar} from '../components/HorizontalScrollbarView';
 import {TemperatureUnitSwitch} from '../components/Buttons';
+import {SearchComponent} from '../components/Search';
+import { DisplayData } from '../services/Auth';
 
 const Home = ({navigation}) => {
+  const [search, setSearch] = React.useState(false);
+
   const handleHamburgerMenu = () => {
     navigation.openDrawer();
+  };
+  const handleSearch = () => {
+    setSearch(!search);
   };
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/images/backgroundImage.png')}
-        resizeMode="cover"
-        style={styles.image}>
-        <View style={styles.headerView}>
-          <View style={styles.logo_menu}>
-            <Pressable onPress={handleHamburgerMenu}>
-              <Image
-                source={require('../assets/images/hamburgerMenu.png')}
-                style={styles.menuImage}
-              />
-            </Pressable>
-            <Image
-              source={require('../assets/images/appLogo.png')}
-              style={styles.logoImage}
-            />
-          </View>
-          <Image
-            source={require('../assets/images/search.png')}
-            style={styles.searchImage}
-          />
-        </View>
-        <ScrollView>
-          <View style={styles.secondView}>
-            <Text style={styles.calendar}>WED, 28 NOV 2018, 11:35 AM </Text>
-            <Text style={styles.place}>Udupi, Karnataka</Text>
-            <View style={styles.favouriteView}>
-              <Image source={require('../assets/images/favourite.png')} />
-              <Text style={styles.favouriteText}>Add to favourite</Text>
+      {!search ? (
+        <>
+          <ImageBackground
+            source={require('../assets/images/backgroundImage.png')}
+            resizeMode="cover"
+            style={styles.image}>
+            <View style={styles.headerView}>
+              <View style={styles.logo_menu}>
+                <Pressable onPress={handleHamburgerMenu}>
+                  <Image
+                    source={require('../assets/images/hamburgerMenu.png')}
+                    style={styles.menuImage}
+                  />
+                </Pressable>
+                <Image
+                  source={require('../assets/images/appLogo.png')}
+                  style={styles.logoImage}
+                />
+              </View>
+              <Pressable onPress={handleSearch}>
+                <Image
+                  source={require('../assets/images/search.png')}
+                  style={styles.searchImage}
+                />
+              </Pressable>
             </View>
-          </View>
-          <View style={styles.climateDetailView}>
-            <Image
-              source={require('../assets/images/mostlySunny.png')}
-              style={styles.sunny}
-            />
-            <View style={styles.temperature}>
-              <Text style={styles.text31}>31</Text>
-              <TemperatureUnitSwitch />
-            </View>
-            <Text style={styles.textSunny}>Mostly Sunny</Text>
-          </View>
-        </ScrollView>
-        <ScrollBar />
-      </ImageBackground>
+            <ScrollView>
+              <View style={styles.secondView}>
+                <Text style={styles.calendar}>WED, 28 NOV 2018     11:35 AM </Text>
+                <Text style={styles.place}>Udupi, Karnataka</Text>
+                <View style={styles.favouriteView}>
+                  <Image source={require('../assets/images/favourite.png')} />
+                  <Text style={styles.favouriteText}>Add to favourite</Text>
+                </View>
+              </View>
+              <View style={styles.climateDetailView}>
+                <Image
+                  source={require('../assets/images/mostlySunny.png')}
+                  style={styles.sunny}
+                />
+                <View style={styles.temperature}>
+                  <Text style={styles.text31}>31</Text>
+                  <TemperatureUnitSwitch />
+                </View>
+                <Text style={styles.textSunny}>Mostly Sunny</Text>
+              </View>
+            </ScrollView>
+            <ScrollBar />
+          </ImageBackground>
+        </>
+      ) : (
+        <SearchComponent setSearch={setSearch} search={search} />
+      )}
     </View>
   );
 };
