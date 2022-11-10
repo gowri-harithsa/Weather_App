@@ -15,15 +15,23 @@ export const WeatherSlice = createSlice({
   },
   reducers: {
     addCity: (state, action) => {
-      state.favList.push(action.payload);
+      // console.log('sate valuee', state.favList)
+      const city = state.favList.map(value => value.id);
+      if (city.includes(action.payload.id)) {
+        alert('Already Exists')
+      } else {
+        state.favList.push(action.payload);
+        alert('Added to Favourite')
+      }
       // state.value.push(action.payload);
       // state.filterValue.push(action.payload);
     },
     deleteCity: (state, action) => {
-      console.log(action.payload.city)
-      state.favList = state.favList.filter(site => site.id !== action.payload.id)
+      console.log(action.payload.city);
+      state.favList = state.favList.filter(
+        site => site.id !== action.payload.id,
+      );
     },
-
   },
 });
 

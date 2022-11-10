@@ -13,7 +13,7 @@ export const ScrollBar = () => {
             <Image source={require('../assets/images/temperatureInfo.png')} />
             <View style={styles.descriptionTextView}>
               <Text style={styles.descriptionText}>Min - Max</Text>
-              <Text style={styles.textDegree}>22° -{data.current.temp_c}°</Text>
+              <Text style={styles.textDegree}>22° -{data.current?.temp_c}°</Text>
             </View>
           </View>
           <View style={styles.precipitationView}>
@@ -28,7 +28,7 @@ export const ScrollBar = () => {
             <View style={styles.descriptionTextView}>
               <Text style={styles.descriptionText}>Humidity</Text>
               <Text style={styles.textDegree}>
-                {data.current.humidity}
+                {data.current?.humidity}
                 %</Text>
             </View>
           </View>

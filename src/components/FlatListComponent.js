@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
-import { deleteCity } from '../redux/FavouritesListSlice';
+import {deleteCity} from '../redux/FavouritesListSlice';
 import {useDispatch} from 'react-redux';
-
 
 export const FavouriteLists = () => {
   const list = useSelector(state => state.favouritesListDetail.favList);
+  const activeFav = require('../assets/images/icon_favourite_active.png');
   const dispatch = useDispatch();
 
   return (
@@ -24,26 +24,32 @@ export const FavouriteLists = () => {
         renderItem={({item}) => (
           <Pressable onLongPress={() => dispatch(deleteCity({id: item.city}))}>
             <>
-            <View style={styles.flatView}>
-              <View style={styles.subView}>
-                <Text style={styles.cityText}>{item.city}, {item.region}</Text>
-                <View style={styles.climateView}>
-                  <Image
-                    source={item.weatherImage}
-                    style={styles.weatherImage}
-                  />
-                  <Text style={styles.textTemperature}>{item.temperature}</Text>
-                  <Text style={styles.textDetail}>{item.detail}</Text>
+              <View style={styles.flatView}>
+                <View style={styles.subView}>
+                  <Text style={styles.cityText}>
+                    {item.city}, {item.region}
+                  </Text>
+                  <View style={styles.climateView}>
+                    <Image
+                      source={item.weatherImage}
+                      style={styles.weatherImage}
+                    />
+                    <Text style={styles.textTemperature}>
+                      {item.temperature}
+                    </Text>
+                    <Text style={styles.textDetail}>{item.detail}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-            <View>
-              <Image
-                source={require('../assets/images/icon_favourite_active.png')}
-                style={styles.imageFav}
-              />
-            </View>
-          </>
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(deleteCity({id: item.city}));
+                  }}>
+                  <Image source={activeFav} style={styles.imageFav} />
+                </TouchableOpacity>
+              </View>
+            </>
           </Pressable>
         )}
         keyExtractor={item => item.city}
@@ -75,17 +81,14 @@ export const RecentLists = () => {
               </View>
             </View>
             <View>
-              <Image
-                source={item.favourite}
-                style={styles.imageFav}
-              />
+              <Image source={item.favourite} style={styles.imageFav} />
             </View>
           </>
         )}
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   flatView: {

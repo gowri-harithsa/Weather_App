@@ -10,7 +10,7 @@ export const getData = createAsyncThunk('WeatherDataList/getData', async () => {
     };
   
     const response = await fetch(
-      'https://weatherapi-com.p.rapidapi.com/current.json?q=Mysore',
+      'https://weatherapi-com.p.rapidapi.com/current.json?q=Arsikere',
       options,
     );
     try {

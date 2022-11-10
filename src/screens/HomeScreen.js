@@ -17,7 +17,7 @@ import {TemperatureUnitSwitch2} from '../components/Buttons';
 import {SearchComponent} from '../components/Search';
 import {useDispatch, useSelector} from 'react-redux';
 import {getData} from '../redux/WeatherDataSlice';
-import { addCity } from '../redux/FavouritesListSlice';
+import {addCity} from '../redux/FavouritesListSlice';
 
 const Home = ({navigation}) => {
   const [date, setDate] = useState('');
@@ -29,6 +29,7 @@ const Home = ({navigation}) => {
     setDate(dateTimeMoment);
   };
   useEffect(() => {
+    dispatch(getData());
     currentDateTime();
   }, []);
 
@@ -37,7 +38,9 @@ const Home = ({navigation}) => {
   const data = useSelector(state => state.WeatherDataList.list);
 
   const [search, setSearch] = useState(false);
-  const [degree, setDegree] = useState(data.current.temp_c);
+  const [degree, setDegree] = useState(data.current?.temp_c);
+  // const weatherIcon = data.current.condition.icon
+  // const icon = require(weatherIcon);
   const handleHamburgerMenu = () => {
     navigation.openDrawer();
   };
@@ -77,25 +80,20 @@ const Home = ({navigation}) => {
               <View style={styles.secondView}>
                 <Text style={styles.calendar}>{date} </Text>
                 <View style={styles.cityNameView}>
-                  <Text style={styles.place}>
-                    {data.location.name},
-                    </Text>
-                  <Text style={styles.place}>
-                    {data.location.region}
-                    </Text>
+                  <Text style={styles.place}>{data.location?.name},</Text>
+                  <Text style={styles.place}>{data.location?.region}</Text>
                 </View>
                 <View style={styles.favouriteView}>
                   <TouchableOpacity
                     onPress={() => {
-                      dispatch(getData());
                       const obj = {
-                        id:data.location.name,
-                        city: data.location.name,
-                        region: data.location.region,
-                        temperature: data.current.temp_c,
-                        detail: data.current.condition.text,
-                      }
-                      dispatch(addCity(obj))
+                        id: data.location?.name,
+                        city: data.location?.name,
+                        region: data.location?.region,
+                        temperature: data.current?.temp_c,
+                        detail: data.current?.condition.text,
+                      };
+                      dispatch(addCity(obj));
                     }}>
                     <Image source={require('../assets/images/favourite.png')} />
                   </TouchableOpacity>
@@ -109,19 +107,28 @@ const Home = ({navigation}) => {
                 />
 
                 <View style={styles.temperature}>
-                  <Text style={styles.text31}>{degree}</Text>
-                  {degree == data.current.temp_c ? (
-                    <TemperatureUnitSwitch
-                      onPressF={() => setDegree(data.current.temp_f)}
-                    />
+                  {degree == data.current?.temp_c ? (
+                    <>
+                      <Text style={styles.text31}>{data.current?.temp_c}</Text>
+
+                      <TemperatureUnitSwitch
+                        onPressF={() => setDegree(data.current?.temp_f)}
+                      />
+                    </>
                   ) : (
-                    <TemperatureUnitSwitch2
-                      onPressC={() => setDegree(data.current.temp_c)}
-                    />
+                    <>
+                      <Text style={styles.text31}>{data.current?.temp_f}</Text>
+
+                      <TemperatureUnitSwitch2
+                        onPressC={() => setDegree(data.current?.temp_c)}
+                      />
+                    </>
                   )}
                 </View>
 
-                <Text style={styles.textSunny}>Mostly Sunny</Text>
+                <Text style={styles.textSunny}>
+                  {data.current?.condition.text}
+                </Text>
               </View>
             </ScrollView>
             <ScrollBar />
