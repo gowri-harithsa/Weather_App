@@ -72,7 +72,7 @@ export const Favourite = ({navigation}) => {
             </Pressable>
           </View>
           <View style={styles.flatView}>
-            <FavouriteLists />
+            <FavouriteLists navigation = {navigation} />
           </View>
         </>
       ) : (

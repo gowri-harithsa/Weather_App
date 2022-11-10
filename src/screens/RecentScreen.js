@@ -67,7 +67,7 @@ export const Recent = ({navigation}) => {
             </Pressable>
           </View>
           <View style={styles.flatView}>
-            <RecentLists />
+            <RecentLists navigation = {navigation}/>
           </View>
         </>
       ) : (

@@ -13,23 +13,26 @@ import {deleteCity} from '../redux/FavouritesListSlice';
 import {useDispatch} from 'react-redux';
 import {setFavourite} from '../redux/FavouritesListSlice';
 import {deleteRecentSearchCity} from '../redux/FavouritesListSlice';
+import {getData} from '../redux/WeatherDataSlice';
 
-export const FavouriteLists = () => {
-
+export const FavouriteLists = ({navigation}) => {
   const list = useSelector(state => state.favouritesListDetail.favList);
+
   const activeFav = require('../assets/images/icon_favourite_active.png');
   const dispatch = useDispatch();
+
+  const handlePress = city => {
+    dispatch(getData(city));
+    dispatch(setFavourite(true));
+    navigation.navigate('Home');
+  };
 
   return (
     <View>
       <FlatList
         data={list}
         renderItem={({item}) => (
-          <Pressable
-            onLongPress={() => {
-              dispatch(deleteCity({id: item.city}));
-              dispatch(setFavourite(false));
-            }}>
+          <Pressable onPress={() => handlePress(item.city)}>
             <>
               <View style={styles.flatView}>
                 <View style={styles.subView}>
@@ -66,9 +69,18 @@ export const FavouriteLists = () => {
   );
 };
 
-export const RecentLists = () => {
+export const RecentLists = ({navigation}) => {
+
   const list2 = useSelector(state => state.favouritesListDetail.recent);
   const dispatch = useDispatch();
+
+  const handlePress = (city, fav) => {
+    dispatch(getData(city));
+    {
+      fav ? dispatch(setFavourite(true)) : dispatch(setFavourite(false));
+    }
+    navigation.navigate('Home');
+  };
 
   return (
     <View style={styles.container}>
@@ -78,7 +90,8 @@ export const RecentLists = () => {
           <Pressable
             onLongPress={() =>
               dispatch(deleteRecentSearchCity({id: item.city}))
-            }>
+            }
+            onPress={() => handlePress(item.city, item.favourite)}>
             <>
               <View style={styles.flatView}>
                 <View style={styles.subView}>

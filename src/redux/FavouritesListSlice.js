@@ -2,13 +2,11 @@ import {createSlice} from '@reduxjs/toolkit';
 import {DataList} from '../assets/data';
 import {RecentDataList} from '../assets/data';
 
-const RecentInitialState = RecentDataList;
 
 export const WeatherSlice = createSlice({
   name: 'favouriteList',
   initialState: {
     favList: [],
-    RecentList: [RecentInitialState],
     value: [],
     recent: [],
     Favourite: false,
@@ -33,8 +31,7 @@ export const WeatherSlice = createSlice({
       );
     },
     deleteRecentSearchCity: (state, action) => {
-      console.log(action.payload.city);
-      state.recent = state.favList.filter(
+      state.recent = state.recent.filter(
         site => site.id !== action.payload.id,
       );
     },

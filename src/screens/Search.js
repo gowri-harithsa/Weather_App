@@ -33,7 +33,6 @@ export const SearchComponent = ({setSearch, search, navigation}) => {
     setText(value);
     setClose(require('../assets/images/icon_clear.png'));
     const Data = await searchCity(value);
-    console.log(Data);
     setData(Data);
   };
 
