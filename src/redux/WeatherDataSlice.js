@@ -1,6 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-export const getData = createAsyncThunk('WeatherDataList/getData', async (city) => {
+export const getData = createAsyncThunk(
+  'WeatherDataList/getData',
+  async city => {
     const options = {
       method: 'GET',
       headers: {
@@ -8,7 +10,7 @@ export const getData = createAsyncThunk('WeatherDataList/getData', async (city) 
         'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com',
       },
     };
-  
+
     const response = await fetch(
       `https://weatherapi-com.p.rapidapi.com/current.json?q=${city}`,
       options,
@@ -19,28 +21,27 @@ export const getData = createAsyncThunk('WeatherDataList/getData', async (city) 
     } catch (err) {
       console.log(err);
     }
-  });
+  },
+);
 
-  export const WeatherDataSlice = createSlice({
-    name: 'WeatherDataList',
-    initialState: {
-      list: [],
-      status: null,
+export const WeatherDataSlice = createSlice({
+  name: 'WeatherDataList',
+  initialState: {
+    list: [],
+    status: null,
+  },
+  extraReducers: {
+    [getData.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [getData.fulfilled]: (state, action) => {
+      state.status = 'success';
+      state.list = action.payload;
+    },
+    [getData.rejected]: (state, action) => {
+      state.status = 'failed';
+    },
+  },
+});
 
-    },
-    extraReducers: {
-      [getData.pending]: (state, action) => {
-        state.status = 'loading';
-      },
-      [getData.fulfilled]: (state, action) => {
-        state.status = 'success';
-        state.list = action.payload;
-      },
-      [getData.rejected]: (state, action) => {
-        state.status = 'failed';
-      },
-    },
-  });
-  
-  // export const {getUserData} = WeatherSlice.actions;
-  export default WeatherDataSlice.reducer;
+export default WeatherDataSlice.reducer;

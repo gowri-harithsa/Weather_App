@@ -8,12 +8,14 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import {FavouriteLists} from '../components/FlatListComponent';
 import {FavOrRecent} from '../components/InitialFavouriteRecent';
 import {RecentLists} from '../components/FlatListComponent';
+import {clear} from '../redux/FavouritesListSlice';
+import {useDispatch} from 'react-redux';
 
 export const Recent = ({navigation}) => {
   const [clearAll, setClear] = React.useState(false);
+  const dispatch = useDispatch();
 
   const handleBackRecent = () => {
     navigation.navigate('Home');
@@ -26,7 +28,10 @@ export const Recent = ({navigation}) => {
       },
       {
         text: 'YES',
-        onPress: () => setClear(!clearAll),
+        onPress: () => {
+          setClear(!clearAll);
+          dispatch(clear());
+        },
       },
     ]);
   };
@@ -124,13 +129,13 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium'
+    fontFamily: 'Roboto-Medium',
   },
   textRemove: {
     color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '500',
     marginRight: '5%',
-    fontFamily: 'Roboto-Medium'
+    fontFamily: 'Roboto-Medium',
   },
 });

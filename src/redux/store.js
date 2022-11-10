@@ -11,7 +11,7 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 
-const reducer  = combineReducers({
+const reducer = combineReducers({
   favouritesListDetail: FavouritesListReducer,
   WeatherDataList: WeatherDataReducer,
 });

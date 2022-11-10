@@ -13,7 +13,9 @@ export const ScrollBar = () => {
             <Image source={require('../assets/images/temperatureInfo.png')} />
             <View style={styles.descriptionTextView}>
               <Text style={styles.descriptionText}>Min - Max</Text>
-              <Text style={styles.textDegree}>22° -{data.current?.temp_c}°</Text>
+              <Text style={styles.textDegree}>
+                22° -{data.current?.temp_c}°
+              </Text>
             </View>
           </View>
           <View style={styles.precipitationView}>
@@ -27,9 +29,7 @@ export const ScrollBar = () => {
             <Image source={require('../assets/images/humidityInfo.png')} />
             <View style={styles.descriptionTextView}>
               <Text style={styles.descriptionText}>Humidity</Text>
-              <Text style={styles.textDegree}>
-                {data.current?.humidity}
-                %</Text>
+              <Text style={styles.textDegree}>{data.current?.humidity}%</Text>
             </View>
           </View>
         </View>
@@ -71,15 +71,13 @@ const styles = StyleSheet.create({
     height: 15,
     color: '#FFFFFF',
     fontSize: 13,
-    fontFamily: 'Roboto-Regular'
-
+    fontFamily: 'Roboto-Regular',
   },
   textDegree: {
     height: 21,
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: '500',
-    fontFamily: 'Roboto-Medium'
-
+    fontFamily: 'Roboto-Medium',
   },
 });

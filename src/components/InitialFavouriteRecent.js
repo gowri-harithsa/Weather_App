@@ -1,12 +1,7 @@
 import * as React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 
-export const FavOrRecent = (props) => {
+export const FavOrRecent = props => {
   return (
     <View style={styles.imageTextView}>
       <Image
@@ -19,20 +14,19 @@ export const FavOrRecent = (props) => {
 };
 
 const styles = StyleSheet.create({
-    imageTextView: {
-      alignItems: 'center',
-      marginTop: 185,
-      flexDirection: 'column',
-    },
-    iconNothing: {
-      height: 84,
-      width: 159,
-    },
-    text: {
-      color: '#FFFFFF',
-      fontSize: 18,
-      marginVertical: 25,
-      fontFamily: 'Roboto-Regular',
-    },
-  });
-  
+  imageTextView: {
+    alignItems: 'center',
+    marginTop: 185,
+    flexDirection: 'column',
+  },
+  iconNothing: {
+    height: 84,
+    width: 159,
+  },
+  text: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    marginVertical: 25,
+    fontFamily: 'Roboto-Regular',
+  },
+});

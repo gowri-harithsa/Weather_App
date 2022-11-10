@@ -266,6 +266,6 @@ const styles = StyleSheet.create({
   },
   favIconActive: {
     height: 20,
-    width: 20,
+    width: 21,
   },
 });

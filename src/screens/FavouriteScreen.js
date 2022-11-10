@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {React, useState} from 'react';
 import {
   View,
   Text,
@@ -10,14 +10,14 @@ import {
 } from 'react-native';
 import {FavouriteLists} from '../components/FlatListComponent';
 import {FavOrRecent} from '../components/InitialFavouriteRecent';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {remove} from '../redux/FavouritesListSlice';
+import {setFavourite} from '../redux/FavouritesListSlice';
 
 export const Favourite = ({navigation}) => {
   const list = useSelector(state => state.favouritesListDetail.favList);
-
-  const [favourite, , setFavourite] = React.useState(false);
-  const [removeAll, setRemoveAll] = React.useState(false);
-
+  const [removeAll, setRemoveAll] = useState(false);
+  const dispatch = useDispatch();
   const handleBackFav = () => {
     navigation.navigate('Home');
   };
@@ -30,13 +30,16 @@ export const Favourite = ({navigation}) => {
       },
       {
         text: 'YES',
-        onPress: () => setRemoveAll(!removeAll),
+        onPress: () => {
+          setRemoveAll(!removeAll);
+          dispatch(setFavourite(false));
+          dispatch(remove());
+        },
       },
     ]);
   };
 
   return (
-
     <ImageBackground
       source={require('../assets/images/backgroundImage.png')}
       resizeMode="cover"
@@ -76,7 +79,6 @@ export const Favourite = ({navigation}) => {
         <FavOrRecent text="No Favourites added" />
       )}
     </ImageBackground>
-
   );
 };
 
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     marginLeft: 35,
-    fontFamily: 'Roboto-Medium'
+    fontFamily: 'Roboto-Medium',
   },
   imageTextView: {
     alignItems: 'center',
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
   subHeaderText: {
     color: '#FFFFFF',
     fontSize: 13,
-    fontFamily: 'Roboto-Regular'
+    fontFamily: 'Roboto-Regular',
   },
   subHeader: {
     flexDirection: 'row',
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '500',
     marginRight: '5%',
-    fontFamily: 'Roboto-Medium'
+    fontFamily: 'Roboto-Medium',
   },
   text: {
     color: '#FFFFFF',
@@ -153,6 +155,6 @@ const styles = StyleSheet.create({
     marginVertical: 25,
   },
   flatView: {
-    flex: 1
+    flex: 1,
   },
 });

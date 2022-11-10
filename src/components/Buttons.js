@@ -1,31 +1,34 @@
 import * as React from 'react';
-import {Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export const TemperatureUnitSwitch = ({onPressF}) => {
-
   return (
-     <View style={styles.units}>
+    <View style={styles.units}>
       <TouchableOpacity style={styles.celcius}>
         <Text style={styles.celciusText}>°C</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.farenheit} onPress={onPressF}>
         <Text style={styles.farenheitText}>°F</Text>
       </TouchableOpacity>
-     </View>
+    </View>
   );
 };
 
 export const TemperatureUnitSwitch2 = ({onPressC}) => {
-
   return (
-     <View style={styles.units}>
+    <View style={styles.units}>
       <TouchableOpacity style={styles.celcius2} onPress={onPressC}>
         <Text style={styles.celciusText2}>°C</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.farenheit2}>
         <Text style={styles.farenheitText2}>°F</Text>
       </TouchableOpacity>
-     </View>
+    </View>
   );
 };
 
@@ -77,26 +80,28 @@ const styles = StyleSheet.create({
     height: 19,
     color: '#E32843',
     fontSize: 16,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
   },
   farenheitText: {
     height: 19,
     color: '#FFFFFF',
     fontSize: 16,
-    textAlign: 'center'
-
+    textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
   },
   celciusText2: {
     height: 19,
     color: '#FFFFFF',
     fontSize: 16,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
   },
   farenheitText2: {
     height: 19,
     color: '#E32843',
     fontSize: 16,
-    textAlign: 'center'
-
+    textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
   },
 });

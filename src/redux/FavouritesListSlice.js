@@ -2,7 +2,6 @@ import {createSlice} from '@reduxjs/toolkit';
 import {DataList} from '../assets/data';
 import {RecentDataList} from '../assets/data';
 
-const FavouriteinitialState = DataList;
 const RecentInitialState = RecentDataList;
 
 export const WeatherSlice = createSlice({
@@ -12,16 +11,16 @@ export const WeatherSlice = createSlice({
     RecentList: [RecentInitialState],
     value: [],
     recent: [],
-    Favourite: false
+    Favourite: false,
   },
   reducers: {
     addCity: (state, action) => {
       const city = state.favList.map(value => value.id);
       if (city.includes(action.payload.id)) {
-        alert('Already Exists')
+        alert('Already Exists');
       } else {
         state.favList.push(action.payload);
-        alert('Added to Favourite')
+        alert('Added to Favourite');
       }
     },
     addCityRecent: (state, action) => {
@@ -41,9 +40,24 @@ export const WeatherSlice = createSlice({
     },
     setFavourite: (state, action) => {
       state.Favourite = action.payload;
-    }
+    },
+    remove: (state, action) => {
+      state.Favourite = [];
+    },
+    clear: (state, action) => {
+      state.recent = [];
+    },
   },
 });
 
-export const {addCity, deleteCity, setFavourite, addCityRecent, deleteRecentSearchCity} = WeatherSlice.actions;
+export const {
+  addCity,
+  deleteCity,
+  setFavourite,
+  addCityRecent,
+  deleteRecentSearchCity,
+  remove,
+  clear,
+  addEffect,
+} = WeatherSlice.actions;
 export default WeatherSlice.reducer;
