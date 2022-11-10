@@ -11,6 +11,7 @@ import {
 import {useSelector} from 'react-redux';
 import {deleteCity} from '../redux/FavouritesListSlice';
 import {useDispatch} from 'react-redux';
+import {setFavourite} from '../redux/FavouritesListSlice';
 
 export const FavouriteLists = () => {
   const list = useSelector(state => state.favouritesListDetail.favList);
@@ -18,11 +19,15 @@ export const FavouriteLists = () => {
   const dispatch = useDispatch();
 
   return (
-    <View style={styles.container}>
+    <View>
       <FlatList
         data={list}
         renderItem={({item}) => (
-          <Pressable onLongPress={() => dispatch(deleteCity({id: item.city}))}>
+          <Pressable
+            onLongPress={() => {
+              dispatch(deleteCity({id: item.city}));
+              dispatch(setFavourite(false));
+            }}>
             <>
               <View style={styles.flatView}>
                 <View style={styles.subView}>
@@ -45,6 +50,7 @@ export const FavouriteLists = () => {
                 <TouchableOpacity
                   onPress={() => {
                     dispatch(deleteCity({id: item.city}));
+                    dispatch(setFavourite(false));
                   }}>
                   <Image source={activeFav} style={styles.imageFav} />
                 </TouchableOpacity>

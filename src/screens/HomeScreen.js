@@ -14,10 +14,10 @@ import moment from 'moment';
 import {ScrollBar} from '../components/HorizontalScrollbarView';
 import {TemperatureUnitSwitch} from '../components/Buttons';
 import {TemperatureUnitSwitch2} from '../components/Buttons';
-import {SearchComponent} from '../components/Search';
+import {SearchComponent} from './Search';
 import {useDispatch, useSelector} from 'react-redux';
-import {getData} from '../redux/WeatherDataSlice';
-import {addCity} from '../redux/FavouritesListSlice';
+import {addCity, deleteCity} from '../redux/FavouritesListSlice';
+import {setFavourite} from '../redux/FavouritesListSlice';
 
 const Home = ({navigation}) => {
   const [date, setDate] = useState('');
@@ -29,23 +29,40 @@ const Home = ({navigation}) => {
     setDate(dateTimeMoment);
   };
   useEffect(() => {
-    dispatch(getData());
     currentDateTime();
-  }, []);
+  }, [useDispatch, useSelector]);
 
   const dispatch = useDispatch();
 
   const data = useSelector(state => state.WeatherDataList.list);
+  const fav = useSelector(state => state.favouritesListDetail.Favourite);
 
   const [search, setSearch] = useState(false);
   const [degree, setDegree] = useState(data.current?.temp_c);
-  // const weatherIcon = data.current.condition.icon
-  // const icon = require(weatherIcon);
+
   const handleHamburgerMenu = () => {
     navigation.openDrawer();
   };
   const handleSearch = () => {
     setSearch(!search);
+  };
+  const handleClick = () => {
+    const obj = {
+      id: data.location?.name,
+      city: data.location?.name,
+      region: data.location?.region,
+      temperature: data.current?.temp_c,
+      detail: data.current?.condition.text,
+      weatherImage: {uri: `https:${data.current?.condition.icon}`}
+    };
+
+    if (!fav) {
+      dispatch(addCity(obj));
+      dispatch(setFavourite(true));
+    } else {
+      dispatch(deleteCity(obj));
+      dispatch(setFavourite(false));
+    }
   };
 
   return (
@@ -84,25 +101,34 @@ const Home = ({navigation}) => {
                   <Text style={styles.place}>{data.location?.region}</Text>
                 </View>
                 <View style={styles.favouriteView}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      const obj = {
-                        id: data.location?.name,
-                        city: data.location?.name,
-                        region: data.location?.region,
-                        temperature: data.current?.temp_c,
-                        detail: data.current?.condition.text,
-                      };
-                      dispatch(addCity(obj));
-                    }}>
-                    <Image source={require('../assets/images/favourite.png')} />
-                  </TouchableOpacity>
+                  {fav ? 
+                      (
+                        <>
+                          <TouchableOpacity onPress={handleClick}>
+                            <Image
+                              style={styles.favIconActive}
+                              source={require('../assets/images/icon_favourite_active.png')}
+                            />
+                          </TouchableOpacity>
+                        </>
+                      )
+                    : 
+                      (
+                        <>
+                          <TouchableOpacity onPress={handleClick}>
+                            <Image
+                              style={styles.favIconActive}
+                              source={require('../assets/images/favourite.png')}
+                            />
+                          </TouchableOpacity>
+                        </>
+                      )}
                   <Text style={styles.favouriteText}>Add to favourite</Text>
                 </View>
               </View>
               <View style={styles.climateDetailView}>
                 <Image
-                  source={require('../assets/images/mostlySunny.png')}
+                  source={{uri: `https:${data.current?.condition.icon}`}}
                   style={styles.sunny}
                 />
 
@@ -110,7 +136,6 @@ const Home = ({navigation}) => {
                   {degree == data.current?.temp_c ? (
                     <>
                       <Text style={styles.text31}>{data.current?.temp_c}</Text>
-
                       <TemperatureUnitSwitch
                         onPressF={() => setDegree(data.current?.temp_f)}
                       />
@@ -118,7 +143,6 @@ const Home = ({navigation}) => {
                   ) : (
                     <>
                       <Text style={styles.text31}>{data.current?.temp_f}</Text>
-
                       <TemperatureUnitSwitch2
                         onPressC={() => setDegree(data.current?.temp_c)}
                       />
@@ -214,8 +238,8 @@ const styles = StyleSheet.create({
     marginVertical: 25,
   },
   sunny: {
-    height: 67,
-    width: 64,
+    height: 80,
+    width: 100,
     alignSelf: 'center',
   },
   temperature: {
@@ -233,5 +257,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     textAlign: 'center',
+  },
+  favIconActive: {
+    height: 20,
+    width: 20,
   },
 });

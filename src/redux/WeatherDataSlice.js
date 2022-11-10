@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-export const getData = createAsyncThunk('WeatherDataList/getData', async () => {
+export const getData = createAsyncThunk('WeatherDataList/getData', async (city) => {
     const options = {
       method: 'GET',
       headers: {
@@ -10,7 +10,7 @@ export const getData = createAsyncThunk('WeatherDataList/getData', async () => {
     };
   
     const response = await fetch(
-      'https://weatherapi-com.p.rapidapi.com/current.json?q=Arsikere',
+      `https://weatherapi-com.p.rapidapi.com/current.json?q=${city}`,
       options,
     );
     try {
@@ -26,6 +26,7 @@ export const getData = createAsyncThunk('WeatherDataList/getData', async () => {
     initialState: {
       list: [],
       status: null,
+
     },
     extraReducers: {
       [getData.pending]: (state, action) => {
