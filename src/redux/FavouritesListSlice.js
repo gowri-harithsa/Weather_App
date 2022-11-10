@@ -8,16 +8,14 @@ const RecentInitialState = RecentDataList;
 export const WeatherSlice = createSlice({
   name: 'favouriteList',
   initialState: {
-    favList: FavouriteinitialState,
+    favList: [],
     RecentList: [RecentInitialState],
     value: [],
-    filterValue: [],
+    recent: [],
     Favourite: false
   },
   reducers: {
     addCity: (state, action) => {
-      // console.log('sate valuee', state.favList
-
       const city = state.favList.map(value => value.id);
       if (city.includes(action.payload.id)) {
         alert('Already Exists')
@@ -26,9 +24,18 @@ export const WeatherSlice = createSlice({
         alert('Added to Favourite')
       }
     },
+    addCityRecent: (state, action) => {
+      state.recent.push(action.payload);
+    },
     deleteCity: (state, action) => {
       console.log(action.payload.city);
       state.favList = state.favList.filter(
+        site => site.id !== action.payload.id,
+      );
+    },
+    deleteRecentSearchCity: (state, action) => {
+      console.log(action.payload.city);
+      state.recent = state.favList.filter(
         site => site.id !== action.payload.id,
       );
     },
@@ -38,5 +45,5 @@ export const WeatherSlice = createSlice({
   },
 });
 
-export const {addCity, deleteCity, setFavourite} = WeatherSlice.actions;
+export const {addCity, deleteCity, setFavourite, addCityRecent, deleteRecentSearchCity} = WeatherSlice.actions;
 export default WeatherSlice.reducer;

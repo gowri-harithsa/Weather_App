@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
       color: '#FFFFFF',
       fontSize: 18,
       marginVertical: 25,
+      fontFamily: 'Roboto-Regular',
     },
   });
   

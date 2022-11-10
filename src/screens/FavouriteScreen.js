@@ -34,10 +34,9 @@ export const Favourite = ({navigation}) => {
       },
     ]);
   };
-  // console.log(list);
 
   return (
-    // <View style={styles.container}>
+
     <ImageBackground
       source={require('../assets/images/backgroundImage.png')}
       resizeMode="cover"
@@ -76,10 +75,8 @@ export const Favourite = ({navigation}) => {
       ) : (
         <FavOrRecent text="No Favourites added" />
       )}
-
-      {/* </View> */}
     </ImageBackground>
-    // </View>
+
   );
 };
 
@@ -114,12 +111,14 @@ const styles = StyleSheet.create({
   },
   search: {
     tintColor: 'black',
+    marginHorizontal: -5,
   },
   textFav: {
     color: '#Z9ZF33',
     fontSize: 20,
     fontWeight: '500',
-    marginLeft: 30,
+    marginLeft: 35,
+    fontFamily: 'Roboto-Medium'
   },
   imageTextView: {
     alignItems: 'center',
@@ -133,6 +132,7 @@ const styles = StyleSheet.create({
   subHeaderText: {
     color: '#FFFFFF',
     fontSize: 13,
+    fontFamily: 'Roboto-Regular'
   },
   subHeader: {
     flexDirection: 'row',
@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '500',
-    marginRight: '9%',
+    marginRight: '5%',
+    fontFamily: 'Roboto-Medium'
   },
   text: {
     color: '#FFFFFF',

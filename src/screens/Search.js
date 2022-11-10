@@ -16,7 +16,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {searchCity} from '../services/Auth';
 import {getData} from '../redux/WeatherDataSlice';
 import { setFavourite } from '../redux/FavouritesListSlice';
+import { addCityRecent } from '../redux/FavouritesListSlice';
+
 export const SearchComponent = ({setSearch, search, navigation}) => {
+
+  const cityList = useSelector(state => state.WeatherDataList.list);
+
   const [close, setClose] = useState('');
   const [text, setText] = useState();
   const [data, setData] = useState('');
@@ -27,7 +32,7 @@ export const SearchComponent = ({setSearch, search, navigation}) => {
     setSearch(!search);
   };
   const appearCloseButton = async value => {
-    // console.log(value)
+
     setText(value);
     setClose(require('../assets/images/icon_clear.png'));
     const Data = await searchCity(value);
@@ -38,6 +43,23 @@ export const SearchComponent = ({setSearch, search, navigation}) => {
   const handleRemove = () => {
     setText();
   };
+
+  const handleSearchOperations = (city) =>  {
+
+    const obj = {
+      id: cityList.location?.name,
+      city: cityList.location?.name,
+      region: cityList.location?.region,
+      temperature: cityList.current?.temp_c,
+      detail: cityList.current?.condition.text,
+      weatherImage: {uri: `https:${cityList.current?.condition.icon}`}
+    };
+
+    dispatch(getData(city));
+    dispatch(setFavourite(false))
+    dispatch(addCityRecent(obj));
+    setSearch(false);
+  }
 
   return (
     <View style={styles.container}>
@@ -71,13 +93,7 @@ export const SearchComponent = ({setSearch, search, navigation}) => {
             data={data}
             renderItem={({item}) => (
               <Pressable
-                onPress={() => {
-                  console.log(item)
-                  dispatch(getData(item.name));
-                  dispatch(setFavourite(false))
-                  setSearch(false);
-
-                }}>
+                onPress={() => handleSearchOperations(item.name)}>
                 <View style={styles.searchView}>
                   <Text style={styles.autoCompleteText}>{item.name}</Text>
                 </View>
@@ -102,6 +118,7 @@ const styles = StyleSheet.create({
   },
   autoCompleteText: {
     marginLeft: 20,
+    fontFamily: 'Roboto-Regular'
   },
   searchView: {
     height: 54,
@@ -138,11 +155,13 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 14,
     marginLeft: 18,
+    fontFamily: 'Roboto-Regular'
+
   },
   search: {
     tintColor: 'black',
     height: 14,
     width: 14,
-    marginRight: 1,
+    marginRight: 20,
   },
 });

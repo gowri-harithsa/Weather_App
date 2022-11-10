@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     letterSpacing: 1.5,
     textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
   },
   place: {
     color: '#FFFFFF',
@@ -216,6 +217,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     marginVertical: 10,
+    fontFamily: 'Roboto-Medium'
   },
   cityNameView: {
     flexDirection: 'row',
@@ -233,6 +235,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 20,
     marginHorizontal: 5,
+    fontFamily: 'Roboto-Medium'
+
   },
   climateDetailView: {
     marginVertical: 25,
@@ -252,11 +256,13 @@ const styles = StyleSheet.create({
     fontSize: 52,
     fontWeight: '500',
     marginVertical: 5,
+    fontFamily: 'Roboto-Medium'
   },
   textSunny: {
     color: '#FFFFFF',
     fontSize: 18,
     textAlign: 'center',
+    fontFamily: 'Roboto-Regular'
   },
   favIconActive: {
     height: 20,

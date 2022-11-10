@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   },
   search: {
     tintColor: 'black',
+    marginHorizontal: -5,
   },
   subHeader: {
     flexDirection: 'row',
@@ -123,11 +124,13 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '500',
+    fontFamily: 'Roboto-Medium'
   },
   textRemove: {
     color: '#FFFFFF',
     fontSize: 13,
     fontWeight: '500',
-    marginRight: '9%',
+    marginRight: '5%',
+    fontFamily: 'Roboto-Medium'
   },
 });

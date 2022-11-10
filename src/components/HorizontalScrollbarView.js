@@ -71,11 +71,15 @@ const styles = StyleSheet.create({
     height: 15,
     color: '#FFFFFF',
     fontSize: 13,
+    fontFamily: 'Roboto-Regular'
+
   },
   textDegree: {
     height: 21,
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: '500',
+    fontFamily: 'Roboto-Medium'
+
   },
 });
