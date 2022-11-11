@@ -15,10 +15,12 @@ import {searchCity} from '../services/Auth';
 import {getData} from '../redux/WeatherDataSlice';
 import {setFavourite} from '../redux/FavouritesListSlice';
 import {addCityRecent} from '../redux/FavouritesListSlice';
+import { removeRecent } from '../redux/FavouritesListSlice';
 
 export const SearchComponent = ({setSearch, search, navigation}) => {
   const cityList = useSelector(state => state.WeatherDataList.list);
   const fav = useSelector(state => state.favouritesListDetail.Favourite);
+
 
   const [close, setClose] = useState('');
   const [text, setText] = useState();
@@ -53,6 +55,7 @@ export const SearchComponent = ({setSearch, search, navigation}) => {
 
     dispatch(getData(city));
     dispatch(setFavourite(false));
+    dispatch(removeRecent(false))
     dispatch(addCityRecent(obj));
     setSearch(false);
   };

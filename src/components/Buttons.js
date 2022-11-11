@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   celcius: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'white',
     backgroundColor: '#FFFFFF',
     height: 30,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 2,
   },
   celcius2: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: 'white',
     height: 30,
     width: 28,

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {React,useState} from 'react';
 import {
   View,
   Text,
@@ -11,10 +11,15 @@ import {
 import {FavOrRecent} from '../components/InitialFavouriteRecent';
 import {RecentLists} from '../components/FlatListComponent';
 import {clear} from '../redux/FavouritesListSlice';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { setFavourite } from '../redux/FavouritesListSlice';
+import { removeRecent } from '../redux/FavouritesListSlice';
 
 export const Recent = ({navigation}) => {
-  const [clearAll, setClear] = React.useState(false);
+
+  const rem = useSelector(state => state.favouritesListDetail.remove)
+
+  const [clearAll, setClear] = useState(false);
   const dispatch = useDispatch();
 
   const handleBackRecent = () => {
@@ -29,8 +34,10 @@ export const Recent = ({navigation}) => {
       {
         text: 'YES',
         onPress: () => {
-          setClear(!clearAll);
           dispatch(clear());
+          dispatch(setFavourite(false))
+          dispatch(removeRecent(true))
+          // setClear(!clearAll);
         },
       },
     ]);
@@ -58,7 +65,7 @@ export const Recent = ({navigation}) => {
           />
         </Pressable>
       </View>
-      {!clearAll ? (
+      {!rem ? (
         <>
           <View style={styles.subHeader}>
             <Text style={styles.text}>You recently searched for</Text>
@@ -88,7 +95,6 @@ const styles = StyleSheet.create({
     height: 56,
     width: '100%',
     backgroundColor: '#FFFFFF',
-    flexDirection: 'row',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

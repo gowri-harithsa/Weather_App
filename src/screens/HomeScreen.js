@@ -18,6 +18,8 @@ import {SearchComponent} from './Search';
 import {useDispatch, useSelector} from 'react-redux';
 import {addCity, deleteCity} from '../redux/FavouritesListSlice';
 import {setFavourite} from '../redux/FavouritesListSlice';
+import { noFavouriteAdded } from '../redux/FavouritesListSlice';
+import { getData } from '../redux/WeatherDataSlice';
 
 const Home = ({navigation}) => {
   const [date, setDate] = useState('');
@@ -29,13 +31,15 @@ const Home = ({navigation}) => {
     setDate(dateTimeMoment);
   };
   useEffect(() => {
+    dispatch(getData('Udupi'))
     currentDateTime();
-  }, [useDispatch, useSelector]);
+  }, []);
 
   const dispatch = useDispatch();
 
   const data = useSelector(state => state.WeatherDataList.list);
   const fav = useSelector(state => state.favouritesListDetail.Favourite);
+  const noFav = useSelector(state => state.favouritesListDetail.noFavourite)
 
   const [search, setSearch] = useState(false);
   const [degree, setDegree] = useState(data.current?.temp_c);
@@ -53,15 +57,16 @@ const Home = ({navigation}) => {
       region: data.location?.region,
       temperature: data.current?.temp_c,
       detail: data.current?.condition.text,
-      weatherImage: {uri: `https:${data.current?.condition.icon}`}
+      weatherImage: {uri: `https:${data.current?.condition.icon}`},
     };
 
     if (!fav) {
-      dispatch(addCity(obj));
       dispatch(setFavourite(true));
+      dispatch(noFavouriteAdded(false));
+      dispatch(addCity(obj));
     } else {
-      dispatch(deleteCity(obj));
       dispatch(setFavourite(false));
+      dispatch(deleteCity(obj));
     }
   };
 
@@ -101,28 +106,25 @@ const Home = ({navigation}) => {
                   <Text style={styles.place}>{data.location?.region}</Text>
                 </View>
                 <View style={styles.favouriteView}>
-                  {fav ? 
-                      (
-                        <>
-                          <TouchableOpacity onPress={handleClick}>
-                            <Image
-                              style={styles.favIconActive}
-                              source={require('../assets/images/icon_favourite_active.png')}
-                            />
-                          </TouchableOpacity>
-                        </>
-                      )
-                    : 
-                      (
-                        <>
-                          <TouchableOpacity onPress={handleClick}>
-                            <Image
-                              style={styles.favIconActive}
-                              source={require('../assets/images/favourite.png')}
-                            />
-                          </TouchableOpacity>
-                        </>
-                      )}
+                  {fav ? (
+                    <>
+                      <TouchableOpacity onPress={handleClick}>
+                        <Image
+                          style={styles.favIconActive}
+                          source={require('../assets/images/icon_favourite_active.png')}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  ) : (
+                    <>
+                      <TouchableOpacity onPress={handleClick}>
+                        <Image
+                          style={styles.favIconActive}
+                          source={require('../assets/images/favourite.png')}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  )}
                   <Text style={styles.favouriteText}>Add to favourite</Text>
                 </View>
               </View>
@@ -217,7 +219,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     marginVertical: 10,
-    fontFamily: 'Roboto-Medium'
+    fontFamily: 'Roboto-Medium',
   },
   cityNameView: {
     flexDirection: 'row',
@@ -235,8 +237,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 20,
     marginHorizontal: 5,
-    fontFamily: 'Roboto-Medium'
-
+    fontFamily: 'Roboto-Medium',
   },
   climateDetailView: {
     marginVertical: 25,
@@ -256,13 +257,14 @@ const styles = StyleSheet.create({
     fontSize: 52,
     fontWeight: '500',
     marginVertical: 5,
-    fontFamily: 'Roboto-Medium'
+    textAlign: 'right',
+    fontFamily: 'Roboto-Medium',
   },
   textSunny: {
     color: '#FFFFFF',
     fontSize: 18,
     textAlign: 'center',
-    fontFamily: 'Roboto-Regular'
+    fontFamily: 'Roboto-Regular',
   },
   favIconActive: {
     height: 20,

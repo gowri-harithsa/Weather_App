@@ -10,6 +10,8 @@ export const WeatherSlice = createSlice({
     value: [],
     recent: [],
     Favourite: false,
+    noFavourite: false,
+    remove: false
   },
   reducers: {
     addCity: (state, action) => {
@@ -22,7 +24,11 @@ export const WeatherSlice = createSlice({
       }
     },
     addCityRecent: (state, action) => {
-      state.recent.push(action.payload);
+      const city = state.recent.map(value => value.id);
+      if (city.includes(action.payload.id)) {
+      } else {
+        state.recent.push(action.payload);
+      }
     },
     deleteCity: (state, action) => {
       console.log(action.payload.city);
@@ -39,11 +45,17 @@ export const WeatherSlice = createSlice({
       state.Favourite = action.payload;
     },
     remove: (state, action) => {
-      state.Favourite = [];
+      state.favList = [];
     },
     clear: (state, action) => {
       state.recent = [];
     },
+    noFavouriteAdded: (state, action) => {
+      state.noFavourite = action.payload
+    },
+    removeRecent: (state, action) => {
+      state.remove = action.payload
+    }
   },
 });
 
@@ -55,6 +67,7 @@ export const {
   deleteRecentSearchCity,
   remove,
   clear,
-  addEffect,
+  noFavouriteAdded,
+  removeRecent,
 } = WeatherSlice.actions;
 export default WeatherSlice.reducer;

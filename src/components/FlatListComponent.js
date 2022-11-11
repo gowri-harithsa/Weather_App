@@ -23,8 +23,8 @@ export const FavouriteLists = ({navigation}) => {
 
   const handlePress = city => {
     dispatch(getData(city));
-    dispatch(setFavourite(true));
     navigation.navigate('Home');
+    dispatch(setFavourite(true))
   };
 
   return (
@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 16,
     marginBottom: 1,
+    flex: 1,
   },
   cityText: {
     color: '#FFE539',
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
   },
   imageFav: {
-    marginHorizontal: '85%',
+    marginHorizontal: '87%',
     marginTop: -50,
     height: 17,
     width: 18,

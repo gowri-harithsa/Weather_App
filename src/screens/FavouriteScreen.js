@@ -13,10 +13,13 @@ import {FavOrRecent} from '../components/InitialFavouriteRecent';
 import {useDispatch, useSelector} from 'react-redux';
 import {remove} from '../redux/FavouritesListSlice';
 import {setFavourite} from '../redux/FavouritesListSlice';
+import { noFavouriteAdded } from '../redux/FavouritesListSlice';
 
 export const Favourite = ({navigation}) => {
   const list = useSelector(state => state.favouritesListDetail.favList);
-  const [removeAll, setRemoveAll] = useState(false);
+  const noFav = useSelector(state => state.favouritesListDetail.noFavourite)
+
+  // const [removeAll, setRemoveAll] = useState(false);
   const dispatch = useDispatch();
   const handleBackFav = () => {
     navigation.navigate('Home');
@@ -31,9 +34,10 @@ export const Favourite = ({navigation}) => {
       {
         text: 'YES',
         onPress: () => {
-          setRemoveAll(!removeAll);
           dispatch(setFavourite(false));
           dispatch(remove());
+          dispatch(noFavouriteAdded(true))
+          // setRemoveAll(true);
         },
       },
     ]);
@@ -61,7 +65,7 @@ export const Favourite = ({navigation}) => {
           />
         </Pressable>
       </View>
-      {!removeAll ? (
+      {!noFav ? (
         <>
           <View style={styles.subHeader}>
             <Text style={styles.subHeaderText}>

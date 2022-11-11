@@ -4,7 +4,8 @@ import {useSelector} from 'react-redux';
 
 export const ScrollBar = () => {
   const data = useSelector(state => state.WeatherDataList.list);
-
+  const minTemp = data.current?.temp_c;
+  const min = minTemp-3;
   return (
     <View style={styles.scrollView}>
       <ScrollView horizontal={true}>
@@ -14,7 +15,7 @@ export const ScrollBar = () => {
             <View style={styles.descriptionTextView}>
               <Text style={styles.descriptionText}>Min - Max</Text>
               <Text style={styles.textDegree}>
-                22° -{data.current?.temp_c}°
+                {min} -{data.current?.temp_c}°
               </Text>
             </View>
           </View>
@@ -22,7 +23,7 @@ export const ScrollBar = () => {
             <Image source={require('../assets/images/precipitationInfo.png')} />
             <View style={styles.descriptionTextView}>
               <Text style={styles.descriptionText}>Precipitation</Text>
-              <Text style={styles.textDegree}>0%</Text>
+              <Text style={styles.textDegree}>{data.current?.precip_mm}%</Text>
             </View>
           </View>
           <View style={styles.humidityView}>
